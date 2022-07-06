@@ -1,0 +1,17 @@
+version: "3"
+services:
+  web-app:
+    build:
+      # Tell docker-compose to use our development Dockerfile
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+      # Load the PORT env from the .env file
+      - ".env"
+    ports:
+      # Map the host's port (3000) to the container's port (3000)
+      - ${PORT}:${PORT}
+    volumes:
+      # Setup volumes to link source files
+      - /app/node_modules
+      - .:/app

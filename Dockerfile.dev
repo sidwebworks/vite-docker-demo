@@ -1,0 +1,18 @@
+# Start with a alpine base image
+FROM node:16-alpine
+
+WORKDIR /app
+
+# Install pnpm package manager (Why not? also it is needed to sync install with the lock-files)
+RUN npm install --location=global pnpm
+
+# Copy package config
+COPY ./package.json ./pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install
+
+COPY . .
+
+# Serve the build output
+CMD ["pnpm", "dev"]
